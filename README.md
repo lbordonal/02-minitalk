@@ -25,5 +25,5 @@ This repository contains code developed at 42 Porto for Minitalk Project, from .
 <br />
 <hr/>
 <p align="center">
-This work is published under the terms of <a href="https://github.com/gcamerli/42unlicense">42 Unlicense</a>. 
+This work is published under the terms of <a href="https://github.com/gcamerli/42unlicense">42 Unlicense</a>.    
 </p>
