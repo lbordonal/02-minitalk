@@ -6,11 +6,18 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:49 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/08 17:24:15 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:41:11 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
+
+void	print_msg()
+{
+	static int	msg;
+
+	ft_putchar_fd(msg, 1);
+}
 
 int	main(int argc, char **argv)
 {
@@ -29,6 +36,8 @@ int	main(int argc, char **argv)
 	while (1)
 	{
 		//receber msg do client
+		signal(SIGUSR1, print_msg);
+		pause();
 	}
 	return (0);
 }
