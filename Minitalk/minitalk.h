@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:33 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/08 17:18:44 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/12 20:14:14 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <strings.h>
 # include <signal.h>
 # include <sys/types.h>
+# include <stdio.h>
 
 /*server.c*/
 
