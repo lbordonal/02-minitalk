@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:02:17 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/08 17:20:40 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:33:05 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	ft_putstr_fd(char *s, int fd)
 		ft_putchar_fd(s[i], fd);
 		i++;
 	}
-	write(1, "\n", 2);
+//	write(1, "\n", 2);
 }
 
 int	ft_atoi(const char *nptr)

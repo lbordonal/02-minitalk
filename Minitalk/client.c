@@ -6,20 +6,20 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/13 16:20:09 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/13 17:22:15 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_bits(int pid, char bit)
+void	send_bits(int pid, unsigned char msg)
 {
 	int	i;
 
 	i = 7;
 	while (i >= 0)
 	{
-		if (bit >> i & 1)
+		if (msg >> i & 1)
 		{
 			kill(pid, SIGUSR1);
 		}
@@ -27,7 +27,7 @@ void	send_bits(int pid, char bit)
 		{
 			kill(pid, SIGUSR2);
 		}
-		usleep(500);
+		usleep(10);
 		i--;
 	}
 }
