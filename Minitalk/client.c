@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/13 09:59:35 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/13 16:16:55 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	send_bits(int pid, char bit)
 		{
 			kill(pid, SIGUSR2);
 		}
-		usleep(25);
+		usleep(500);
 		i--;
 	}
 }
@@ -35,6 +35,7 @@ void	send_bits(int pid, char bit)
 int	main(int argc, char **argv)
 {
 	int		pid;
+	int		c_pid;
 	int		i;
 	char	*msg;
 
@@ -54,6 +55,8 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Please, insert a non-empty message", 1);
 		return (0);
 	}
+	c_pid = getpid();
+	ft_putnbr_fd(c_pid, 1);
 	pid = ft_atoi(argv[1]);
 	msg = argv[2];
 	write(1, "PID: ", 5);
@@ -61,6 +64,7 @@ int	main(int argc, char **argv)
 	write(1, "\n", 2);
 	write(1, "Message: ", 9);
 	ft_putstr_fd(msg, 1);
+	//fazer ft_strdup(msg, \n)
 	while (argv[2][i] != '\0')
 	{
 		send_bits(pid, argv[2][i]);//enviar cada char para server
