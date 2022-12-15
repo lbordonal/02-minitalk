@@ -6,36 +6,33 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/13 17:22:15 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:35:16 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_bits(int pid, unsigned char msg)
+void	send_msg(int server_pid, char msg)
 {
-	int	i;
+	int				bit;
 
-	i = 7;
-	while (i >= 0)
+	bit = 8;
+	while (bit--)
 	{
-		if (msg >> i & 1)
-		{
-			kill(pid, SIGUSR1);
-		}
+		if (msg & 0b10000000)
+			kill(server_pid, SIGUSR1);
 		else
-		{
-			kill(pid, SIGUSR2);
-		}
-		usleep(10);
-		i--;
+			kill(server_pid, SIGUSR2);
+		usleep(100);
+		msg <<= 1;
 	}
 }
 
+
 int	main(int argc, char **argv)
 {
-	int		pid;
 	int		i;
+	int		server_pid;
 	char	*msg;
 
 	i = 0;
@@ -54,18 +51,18 @@ int	main(int argc, char **argv)
 		ft_putstr_fd("Please, insert a non-empty message", 1);
 		return (0);
 	}
-	pid = ft_atoi(argv[1]);
-	msg = argv[2];
-	write(1, "PID: ", 5);
-	ft_putnbr_fd(pid, 1);
-	write(1, "\n", 2);
-	write(1, "Message: ", 9);
-	ft_putstr_fd(msg, 1);
-	//fazer ft_strdup(msg, \n)
-	while (argv[2][i] != '\0')
+	server_pid = ft_atoi(argv[1]);
+	msg = ft_strdup(argv[2]);
+	write(1, "PID: ", 5);//remover depois dos testes finais
+	ft_putnbr_fd(server_pid, 1); //remover depois dos testes finais
+	write(1, "\n", 2);//remover depois dos testes finais
+	write(1, "Message: ", 9);//remover depois dos testes finais
+	ft_putstr_fd(msg, 1);//remover depois dos testes finais
+	while (msg[i] != '\0')
 	{
-		send_bits(pid, argv[2][i]);//enviar cada char para server
+		send_msg(server_pid, msg[i]);//enviar cada char para server ou enviar msg completa e tratar dentro do send_bits?
 		i++;
 	}
+	free(msg);
 	return (0);
 }

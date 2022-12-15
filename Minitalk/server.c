@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:49 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/13 17:27:44 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:09:21 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,16 @@
 
 static void	print_msg(int signal)
 {
-	static int	bits;
+	static int	bit;
 	static int	character;
 
 	if (signal == SIGUSR1)
-		character += 1 << (7 - bits);
-	bits++;
-	if (bits == 8)
+		character += 1 << (7 - bit);
+	bit++;
+	if (bit == 8)
 	{
 		ft_putchar_fd(character, 1);
-		bits = 0;
+		bit = 0;
 		character = 0;
 	}
 }

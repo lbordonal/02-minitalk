@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:02:17 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/13 16:33:05 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:09:38 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,3 +110,32 @@ int	ft_isstringdigit(char *string)
 	return (result);
 }
 
+char	*ft_strdup(const char *s)
+{
+	int		i;
+	int		size;
+	char	*new;
+
+	i = 0;
+	size = ft_strlen(s);
+	new = malloc(sizeof(char) * (size + 1));
+	if (!new)
+		return (NULL);
+	while (s[i] != '\0')
+	{
+		new[i] = s[i];
+		i++;
+	}
+	new[i] = '\0';
+	return (new);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	len;
+
+	len = 0;
+	while (s[len] != '\0')
+		len++;
+	return (len);
+}
