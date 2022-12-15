@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:49 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/15 15:09:21 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:01:34 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,17 +30,17 @@ static void	print_msg(int signal)
 
 int	main(int argc, char **argv)
 {
-	int	pid;
+	int	server_pid;
 
 	(void)argv;
-	pid = getpid();
+	server_pid = getpid();
 	if (argc != 1)
 	{
 		ft_putstr_fd("Please, verify the input → ./server", 1);
 		return (0);
 	}
 	ft_putstr_fd("PID: ", 1);
-	ft_putnbr_fd(pid, 1);
+	ft_putnbr_fd(server_pid, 1);
 	ft_putstr_fd("\n", 1);
 	signal(SIGUSR1, print_msg);
 	signal(SIGUSR2, print_msg);

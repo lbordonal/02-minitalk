@@ -6,25 +6,29 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/15 15:35:16 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/15 16:01:33 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_msg(int server_pid, char msg)
+void	send_msg(int server_pid, char *msg)
 {
-	int				bit;
+	int	bit;
 
-	bit = 8;
-	while (bit--)
+	while (*msg)
 	{
-		if (msg & 0b10000000)
-			kill(server_pid, SIGUSR1);
-		else
-			kill(server_pid, SIGUSR2);
-		usleep(100);
-		msg <<= 1;
+		bit = 8;
+		while (bit--)
+		{
+			if (*msg & 0b10000000)
+				kill(server_pid, SIGUSR1);
+			else
+				kill(server_pid, SIGUSR2);
+			usleep(100);
+			*msg <<= 1;
+		}
+		msg++;
 	}
 }
 
@@ -65,4 +69,5 @@ int	main(int argc, char **argv)
 	}
 	free(msg);
 	return (0);
+
 }
