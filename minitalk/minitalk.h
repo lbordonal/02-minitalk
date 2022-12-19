@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 12:11:33 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/19 17:50:32 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/19 20:25:04 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # include <strings.h>
 # include <signal.h>
 # include <sys/types.h>
-# include <stdio.h>
+# include <stdio.h> //remover depois dos testes
 
 /* minitalk_utils.c & minitalk_utils2.c */
 void	ft_putchar_fd(char c, int fd);
@@ -28,6 +28,7 @@ int		ft_atoi(const char *nptr);
 int		ft_isstringdigit(char *string);
 int		ft_isdigit(int c);
 char	*ft_strdup(const char *s);
+char	*ft_itoa(int n);
 size_t	ft_strlen(const char *s);
 
 #endif

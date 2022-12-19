@@ -1,31 +1,59 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   client.c                                           :+:      :+:    :+:   */
+/*   client_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/19 19:28:24 by lbordona         ###   ########.fr       */
+/*   Created: 2022/12/19 18:43:25 by lbordona          #+#    #+#             */
+/*   Updated: 2022/12/19 20:27:11 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minitalk.h"
 
-void	send_msg(int server_pid, char msg)
+/* static void	msg_received(int signal)
+{
+	if (signal == SIGUSR1)
+		ft_putstr_fd("Char received (:", 1);
+	else
+		ft_putstr_fd("Char received (:", 1);
+} */
+
+void	convert_and_send(unsigned char c, int server_pid)
 {
 	int	bit;
 
 	bit = 7;
 	while (bit >= 0)
 	{
-		if (msg >> bit & 1)
+		if (c >> bit & 1)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
 		usleep(400);
 		bit--;
 	}
+}
+
+void	send_clientpid_and_msg(int server_pid, char *client_pid, char *msg)
+{
+	int	i;
+
+	i = 0;
+	while (client_pid[i] != '\0')
+	{
+		convert_and_send(client_pid[i], server_pid);
+		i++;
+	}
+	convert_and_send('*', server_pid);
+	i = 0;
+	while (msg[i] != '\0')
+	{
+		convert_and_send(msg[i], server_pid);
+		i++;
+	}
+	convert_and_send('\n', server_pid);
 }
 
 int	check_input(int ac, char **av)
@@ -49,22 +77,20 @@ int	check_input(int ac, char **av)
 
 int	main(int argc, char **argv)
 {
-	int		i;
 	int		server_pid;
+	int		c_pid;
+	char	*client_pid;
 	char	*msg;
 
-	i = 0;
+	c_pid = getpid();
+	client_pid = ft_itoa(c_pid);
 	if (check_input(argc, argv) == 1)
 	{
 		server_pid = ft_atoi(argv[1]);
-		msg = ft_strdup(argv[2]);
-		while (msg[i] != '\0')
-		{
-			send_msg(server_pid, msg[i]);
-			i++;
-		}
-		free(msg);
-		send_msg(server_pid, '\n');
+		msg = argv[2];
+		send_clientpid_and_msg(server_pid, client_pid, msg);
+		pause();
+		free(client_pid);
 	}
 	return (0);
 }
