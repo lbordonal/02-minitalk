@@ -6,7 +6,7 @@
 #    By: lbordona <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/12/08 12:10:29 by lbordona          #+#    #+#              #
-#    Updated: 2022/12/19 17:11:06 by lbordona         ###   ########.fr        #
+#    Updated: 2022/12/19 17:50:52 by lbordona         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,10 +21,10 @@ CLIENT = client
 SERVER = server
 
 #Sources:
-SRC_S = server.c minitalk_utils.c
-SRC_C = client.c minitalk_utils.c
-#BONUS_S = server_bonus.c minitalk_utils.c
-#BONUS_C = client_bonus.c minitalk_utils.c
+SRC_S = server.c minitalk_utils.c minitalk_utils2.c
+SRC_C = client.c minitalk_utils.c minitalk_utils2.c
+#BONUS_S = server_bonus.c minitalk_utils.c minitalk_utils2.c
+#BONUS_C = client_bonus.c minitalk_utils.c minitalk_utils2.c
 
 OBJ_S = $(SRC_S:%.c=%.o)
 OBJ_C = $(SRC_C:%.c=%.o)

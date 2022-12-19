@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/19 17:36:11 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/19 18:42:32 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	send_msg(int server_pid, char msg)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		usleep(500);
+		usleep(400);
 		bit--;
 	}
 }
@@ -36,7 +36,10 @@ int	check_input(int ac, char **av)
 	if (ac != 3)
 		ft_putstr_fd("Please, verify the input → ./client <PID> <Message>\n", 1);
 	else if (!ft_isstringdigit(av[1]))
-		ft_putstr_fd("Please, verify the PID → It should contain only numbers\n", 1);
+	{
+		ft_putstr_fd("Please, verify the PID", 1);
+		ft_putstr_fd("→ It should contain only numbers\n", 1);
+	}
 	else if (*av[2] == 0)
 		ft_putstr_fd("Please, insert a non-empty message\n", 1);
 	else
@@ -57,10 +60,11 @@ int	main(int argc, char **argv)
 		msg = ft_strdup(argv[2]);
 		while (msg[i] != '\0')
 		{
-			send_msg(server_pid, msg[i]);//enviar cada char para server ou enviar msg completa e tratar dentro do send_bits?
+			send_msg(server_pid, msg[i]);
 			i++;
 		}
 		free(msg);
+		send_msg(server_pid, '\n');
 	}
 	return (0);
 }
