@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:51 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/21 13:34:39 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:28:25 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,14 @@ int	check_input(int ac, char **av)
 
 	correct_input = 0;
 	if (ac != 3)
-		ft_putstr_fd("Please, verify the input → ./client <PID> <Message>\n", 1);
+		ft_printf("%s\n", "Please, verify the input → ./client <PID> <Message>");
 	else if (!ft_isstringdigit(av[1]))
 	{
-		ft_putstr_fd("Please, verify the PID", 1);
-		ft_putstr_fd("→ It should contain only numbers\n", 1);
+		ft_printf("%s", "Please, verify the PID");
+		ft_printf("%s\n", " → It should contain only numbers.");
 	}
 	else if (*av[2] == 0)
-		ft_putstr_fd("Please, insert a non-empty message\n", 1);
+		ft_printf("%s\n", "Please, insert a non-empty message.");
 	else
 		correct_input = 1;
 	return (correct_input);

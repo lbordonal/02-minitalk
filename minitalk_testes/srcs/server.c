@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 20:57:49 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/21 13:12:35 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/21 16:28:19 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,10 @@ int	main(int argc, char **argv)
 	server_pid = getpid();
 	if (argc != 1)
 	{
-		ft_putstr_fd("Please, verify the input → ./server", 1);
+		ft_printf("%s\n", "Please, verify the input → ./server");
 		return (0);
 	}
-	ft_putstr_fd("PID: ", 1);
-	ft_putnbr_fd(server_pid, 1);
-	ft_putstr_fd("\n", 1);
+	ft_printf("%s%d\n", "Server PID: ", server_pid);
 	signal(SIGUSR1, print_msg);
 	signal(SIGUSR2, print_msg);
 	while (1)
