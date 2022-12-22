@@ -6,26 +6,42 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:13 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/21 16:28:22 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/22 11:46:33 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/minitalk_bonus.h"
 
-void	send_msg(int server_pid, char msg)
+void	convert_bin(unsigned char character, int server_pid)
 {
-	int	bit;
+	unsigned char	bit;
 
-	bit = 7;
-	while (bit >= 0)
+	bit = 0b10000000;
+	while (bit != 0)
 	{
-		if (msg >> bit & 1)
+		if (bit & character)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		usleep(400);
-		bit--;
+		bit = bit >> 1;
+		usleep(100);
 	}
+}
+
+void	send_msg(int server_pid, char *client_pid, char *msg)
+{
+	while (*client_pid)
+	{
+		convert_bin(*client_pid, server_pid);
+		client_pid++;
+	}
+	convert_bin('\0', server_pid);
+	while (*msg)
+	{
+		convert_bin(*msg, server_pid);
+		msg++;
+	}
+	convert_bin('\0', server_pid);
 }
 
 int	check_input(int ac, char **av)
@@ -47,24 +63,28 @@ int	check_input(int ac, char **av)
 	return (correct_input);
 }
 
+void	confirmation()
+{
+	ft_printf("%s\n", "-- Message received --");
+	exit (0);
+}
+
 int	main(int argc, char **argv)
 {
-	int		i;
 	int		server_pid;
+	char	*client_pid;
 	char	*msg;
 
-	i = 0;
+	client_pid = ft_itoa(getpid());
 	if (check_input(argc, argv) == 1)
 	{
+		signal(SIGUSR1, confirmation);
 		server_pid = ft_atoi(argv[1]);
 		msg = ft_strdup(argv[2]);
-		while (msg[i] != '\0')
-		{
-			send_msg(server_pid, msg[i]);
-			i++;
-		}
-		free(msg);
-		send_msg(server_pid, '\n');
+		send_msg(server_pid, client_pid, msg);
 	}
+	pause();
+	free(client_pid);
+	free(msg);
 	return (0);
 }
