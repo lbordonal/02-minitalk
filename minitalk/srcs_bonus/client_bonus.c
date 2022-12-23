@@ -6,42 +6,40 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:13 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/22 11:46:33 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:07:04 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes_bonus/minitalk_bonus.h"
 
-void	convert_bin(unsigned char character, int server_pid)
+void	send_msg(int server_pid, char *msg)
 {
-	unsigned char	bit;
+	unsigned char	character;
+	int				bit;
 
-	bit = 0b10000000;
-	while (bit != 0)
+	while (*msg)
 	{
-		if (bit & character)
-			kill(server_pid, SIGUSR1);
-		else
-			kill(server_pid, SIGUSR2);
-		bit = bit >> 1;
-		usleep(100);
+		character = *msg;
+		bit = 8;
+		while (bit--)
+		{
+			if (character & 0b10000000)
+				kill(server_pid, SIGUSR1);
+			else
+				kill(server_pid, SIGUSR2);
+			usleep(50);
+			character <<= 1;
+		}
+		msg++;
 	}
 }
 
-void	send_msg(int server_pid, char *client_pid, char *msg)
+void	handler_sig(int signal, siginfo_t *info, void *ucontent)
 {
-	while (*client_pid)
-	{
-		convert_bin(*client_pid, server_pid);
-		client_pid++;
-	}
-	convert_bin('\0', server_pid);
-	while (*msg)
-	{
-		convert_bin(*msg, server_pid);
-		msg++;
-	}
-	convert_bin('\0', server_pid);
+	(void)ucontent;
+	(void)info;
+	if (signal == SIGUSR1)
+		ft_printf("%s\n", "Character received");
 }
 
 int	check_input(int ac, char **av)
@@ -63,28 +61,24 @@ int	check_input(int ac, char **av)
 	return (correct_input);
 }
 
-void	confirmation()
-{
-	ft_printf("%s\n", "-- Message received --");
-	exit (0);
-}
-
 int	main(int argc, char **argv)
 {
-	int		server_pid;
-	char	*client_pid;
-	char	*msg;
+	int					server_pid;
+	char				*msg;
+	struct sigaction	sa_newsig;
 
-	client_pid = ft_itoa(getpid());
 	if (check_input(argc, argv) == 1)
 	{
-		signal(SIGUSR1, confirmation);
+		sa_newsig.sa_sigaction = &handler_sig;
+		sa_newsig.sa_flags = SA_SIGINFO;
 		server_pid = ft_atoi(argv[1]);
 		msg = ft_strdup(argv[2]);
-		send_msg(server_pid, client_pid, msg);
+		if (sigaction(SIGUSR1, &sa_newsig, NULL) == -1)
+			ft_printf("%s\n", "Error → Failed to send SIGUSR1");
+		send_msg(server_pid, msg);
+		free(msg);
 	}
-	pause();
-	free(client_pid);
-	free(msg);
+	while (1)
+		pause ();
 	return (0);
 }
