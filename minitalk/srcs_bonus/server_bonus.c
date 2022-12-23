@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:24 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/22 23:41:16 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:46:25 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ void	handler_sig(int signal, siginfo_t *info, void *ucontent)
 	bit++;
 	if (bit == 8)
 	{
-		//ft_printf("%c", character);
-		ft_putchar_fd(character, STDOUT_FILENO);
+		ft_printf("%c", character);
 		bit = 0;
 		character = 0;
 		if (kill(info->si_pid, SIGUSR1) == -1)
