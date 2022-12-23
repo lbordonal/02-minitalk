@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:13 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/23 00:46:37 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/23 16:28:52 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,17 @@ void	send_msg(int server_pid, char *msg)
 			character <<= 1;
 		}
 		msg++;
+	}
+	character = '\n'; //tentar juntar com a parte de cima com funcoes da libft
+	bit = 8;
+	while (bit--)
+	{
+		if (character & 0b10000000)
+			kill(server_pid, SIGUSR1);
+		else
+			kill(server_pid, SIGUSR2);
+		usleep(50);
+		character <<= 1;
 	}
 }
 
