@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:13 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/26 17:30:49 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:47:19 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,17 +32,23 @@ void	send_msg(int server_pid, char *msg)
 		}
 		msg++;
 	}
-	usleep(100);
- 	character = '\0'; //teste pra ver se responde com o fim da mensagem
-	bit = 8;
-	while (bit--)
+}
+
+void	send_null(int server_pid)
+{
+	int		bit;
+	char	null;
+
+	bit = 7;
+	null = '\0';
+	while (bit >= 0)
 	{
-		if (character & 0b10000000)
+		if (null >> bit & 1)
 			kill(server_pid, SIGUSR1);
 		else
 			kill(server_pid, SIGUSR2);
-		usleep(50);
-		character <<= 1;
+		usleep(400);
+		bit--;
 	}
 }
 
@@ -85,12 +91,12 @@ int	main(int argc, char **argv)
 		sa_newsig.sa_sigaction = &handler_sig;
 		sa_newsig.sa_flags = SA_SIGINFO;
 		server_pid = ft_atoi(argv[1]);
-		//msg = ft_strdup(argv[2]);
 		msg = ft_strjoin(argv[2], "\n");
 		if (sigaction(SIGUSR1, &sa_newsig, NULL) == -1)
 			ft_printf("%s\n", "Error → Failed to send SIGUSR1");
 		send_msg(server_pid, msg);
 		free(msg);
+		send_null(server_pid);
 	}
 	while (1)
 		pause ();

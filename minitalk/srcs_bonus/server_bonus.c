@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:24 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/26 17:30:48 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:47:34 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ void	handler_sig(int signal, siginfo_t *info, void *ucontent)
 		bit = 0;
 		character = 0;
 	}
-//	return ;
 }
 
 int	main(int argc, char **argv)
