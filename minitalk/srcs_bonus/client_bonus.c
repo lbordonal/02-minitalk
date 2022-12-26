@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:13 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/23 16:28:52 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:30:49 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,8 @@ void	send_msg(int server_pid, char *msg)
 		}
 		msg++;
 	}
-	character = '\n'; //tentar juntar com a parte de cima com funcoes da libft
+	usleep(100);
+ 	character = '\0'; //teste pra ver se responde com o fim da mensagem
 	bit = 8;
 	while (bit--)
 	{
@@ -50,7 +51,8 @@ void	handler_sig(int signal, siginfo_t *info, void *ucontent)
 	(void)ucontent;
 	(void)info;
 	if (signal == SIGUSR1)
-		ft_printf("%s\n", "Character received");
+		ft_printf("%s\n", "Message received");
+	exit (1);
 }
 
 int	check_input(int ac, char **av)
@@ -83,7 +85,8 @@ int	main(int argc, char **argv)
 		sa_newsig.sa_sigaction = &handler_sig;
 		sa_newsig.sa_flags = SA_SIGINFO;
 		server_pid = ft_atoi(argv[1]);
-		msg = ft_strdup(argv[2]);
+		//msg = ft_strdup(argv[2]);
+		msg = ft_strjoin(argv[2], "\n");
 		if (sigaction(SIGUSR1, &sa_newsig, NULL) == -1)
 			ft_printf("%s\n", "Error → Failed to send SIGUSR1");
 		send_msg(server_pid, msg);

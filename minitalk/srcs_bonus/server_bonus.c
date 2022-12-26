@@ -6,7 +6,7 @@
 /*   By: lbordona <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 12:56:24 by lbordona          #+#    #+#             */
-/*   Updated: 2022/12/23 00:46:25 by lbordona         ###   ########.fr       */
+/*   Updated: 2022/12/26 17:30:48 by lbordona         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,12 @@ void	handler_sig(int signal, siginfo_t *info, void *ucontent)
 	if (bit == 8)
 	{
 		ft_printf("%c", character);
+		if (character == '\0')
+			kill(info->si_pid, SIGUSR1);
 		bit = 0;
 		character = 0;
-		if (kill(info->si_pid, SIGUSR1) == -1)
-			ft_printf("%s\n", "Error → Failed to send SIGUSR1");
-		return ;
 	}
+//	return ;
 }
 
 int	main(int argc, char **argv)
