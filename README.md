@@ -3,7 +3,7 @@
 </h1>
 
 <p align="center">
-	<img src="https://img.shields.io/badge/score-not%20submitted-red" />
+	<img src="https://img.shields.io/badge/score-125%20%2F%20100%20%E2%98%85-9cf" />
 	<img src="https://img.shields.io/github/languages/code-size/lbordonal/02-minitalk" />
 	<img src="https://img.shields.io/github/languages/count/lbordonal/02-minitalk" />
 	<img src="https://img.shields.io/github/languages/top/lbordonal/02-minitalk" />
@@ -11,7 +11,7 @@
 </p>
 
 <p align="center">
-This repository contains code developed at 42 Porto for minitalk Project, from 08/12/2022 to ...
+This repository contains code developed at 42 Porto for minitalk Project, from 08/12/2022 to 30/12/2022.
 </p>
 
 <h2 align="left">
