@@ -14,7 +14,8 @@
 This repository contains code developed at 42 Porto for minitalk Project, from 08/12/2022 to 30/12/2022.
 </p>
 
-<h2 align="left">
+<img src="https://github.com/lbordonal/lbordonal/blob/main/.42_badges/minitalkm.png" align="right" />
+<h2>
 	 :notebook: Subject
 </h2>
 <a href="https://github.com/lbordonal/02-minitalk/blob/main/Subject/en.subject.pdf">Click here</a> for the subject of this project.
